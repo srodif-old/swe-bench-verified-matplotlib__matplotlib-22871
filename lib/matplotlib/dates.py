@@ -797,8 +797,12 @@ class ConciseDateFormatter(ticker.Formatter):
         # 3: hours, 4: minutes, 5: seconds, 6: microseconds
         for level in range(5, -1, -1):
             if len(np.unique(tickdate[:, level])) > 1:
-                if level < 2:
+                if level == 0:
+                    # For year-level ticks, hide offset since year is already 
+                    # shown in the tick labels
                     show_offset = False
+                # For month-level ticks (level == 1), keep show_offset = True
+                # so that the year can be displayed in the offset
                 break
             elif level == 0:
                 # all tickdate are the same, so only micros might be different
